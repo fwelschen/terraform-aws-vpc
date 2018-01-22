@@ -25,7 +25,7 @@ variable "private_subnets" {
 
 variable "backend_subnets" {
   type        = "list"
-  description = "A list of database subnets"
+  description = "A list of backend subnets"
   default     = []
 }
 
@@ -142,10 +142,10 @@ variable "private_route_table_tags" {
   default     = {}
 }
 
-#variable "database_subnet_tags" {
-#  description = "Additional tags for the database subnets"
-#  default     = {}
-#}
+variable "backend_subnet_tags" {
+  description = "Additional tags for the backend subnets"
+  default     = {}
+}
 
 #variable "redshift_subnet_tags" {
 #  description = "Additional tags for the redshift subnets"

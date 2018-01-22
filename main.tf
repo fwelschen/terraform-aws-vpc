@@ -75,7 +75,7 @@ resource "aws_route" "public_internet_gateway" {
 # There are so many route-tables as the largest amount of subnets of each type (really?)
 #################
 resource "aws_route_table" "private" {
-  count = "${max(length(var.private_subnets), length(var.elasticache_subnets), length(var.backend_subnets), length(var.redshift_subnets))}"
+  count = "${max(length(var.private_subnets), length(var.backend_subnets))}"
 
   vpc_id           = "${aws_vpc.this.id}"
   propagating_vgws = ["${var.private_propagating_vgws}"]
@@ -142,22 +142,22 @@ resource "aws_db_subnet_group" "database" {
 ##################
 # Redshift subnet
 ##################
-resource "aws_subnet" "redshift" {
-  count = "${length(var.redshift_subnets)}"
+#resource "aws_subnet" "redshift" {
+#  count = "${length(var.redshift_subnets)}"
 
-  vpc_id            = "${aws_vpc.this.id}"
-  cidr_block        = "${var.redshift_subnets[count.index]}"
-  availability_zone = "${element(var.azs, count.index)}"
+#  vpc_id            = "${aws_vpc.this.id}"
+#  cidr_block        = "${var.redshift_subnets[count.index]}"
+#  availability_zone = "${element(var.azs, count.index)}"
 
-  tags = "${merge(var.tags, var.redshift_subnet_tags, map("Name", format("%s-redshift-subnet-%s", var.name, element(var.azs, count.index))))}"
-}
+#  tags = "${merge(var.tags, var.redshift_subnet_tags, map("Name", format("%s-redshift-subnet-%s", var.name, element(var.azs, count.index))))}"
+#}
 
 resource "aws_redshift_subnet_group" "redshift" {
-  count = "${length(var.redshift_subnets) > 0 ? 1 : 0}"
+  count = "${length(var.backend_subnets) > 0 ? 1 : 0}"
 
   name        = "${var.name}"
   description = "Redshift subnet group for ${var.name}"
-  subnet_ids  = ["${aws_subnet.redshift.*.id}"]
+  subnet_ids  = ["${aws_subnet.backend.*.id}"]
 
   tags = "${merge(var.tags, map("Name", format("%s-redshift-subnet-group", var.name)))}"
 }
@@ -165,22 +165,22 @@ resource "aws_redshift_subnet_group" "redshift" {
 #####################
 # ElastiCache subnet
 #####################
-resource "aws_subnet" "elasticache" {
-  count = "${length(var.elasticache_subnets)}"
+#resource "aws_subnet" "elasticache" {
+#  count = "${length(var.elasticache_subnets)}"
 
-  vpc_id            = "${aws_vpc.this.id}"
-  cidr_block        = "${var.elasticache_subnets[count.index]}"
-  availability_zone = "${element(var.azs, count.index)}"
+#  vpc_id            = "${aws_vpc.this.id}"
+#  cidr_block        = "${var.elasticache_subnets[count.index]}"
+#  availability_zone = "${element(var.azs, count.index)}"
 
-  tags = "${merge(var.tags, var.elasticache_subnet_tags, map("Name", format("%s-elasticache-subnet-%s", var.name, element(var.azs, count.index))))}"
-}
+#  tags = "${merge(var.tags, var.elasticache_subnet_tags, map("Name", format("%s-elasticache-subnet-%s", var.name, element(var.azs, count.index))))}"
+#}
 
 resource "aws_elasticache_subnet_group" "elasticache" {
-  count = "${length(var.elasticache_subnets) > 0 ? 1 : 0}"
+  count = "${length(var.backend_subnets) > 0 ? 1 : 0}"
 
   name        = "${var.name}"
   description = "ElastiCache subnet group for ${var.name}"
-  subnet_ids  = ["${aws_subnet.elasticache.*.id}"]
+  subnet_ids  = ["${aws_subnet.backend.*.id}"]
 }
 
 ##############
@@ -300,19 +300,19 @@ resource "aws_route_table_association" "backend" {
   route_table_id = "${element(aws_route_table.private.*.id, count.index)}"
 }
 
-resource "aws_route_table_association" "redshift" {
-  count = "${length(var.redshift_subnets)}"
+#resource "aws_route_table_association" "redshift" {
+#  count = "${length(var.redshift_subnets)}"
 
-  subnet_id      = "${element(aws_subnet.redshift.*.id, count.index)}"
-  route_table_id = "${element(aws_route_table.private.*.id, count.index)}"
-}
+#  subnet_id      = "${element(aws_subnet.redshift.*.id, count.index)}"
+#  route_table_id = "${element(aws_route_table.private.*.id, count.index)}"
+#}
 
-resource "aws_route_table_association" "elasticache" {
-  count = "${length(var.elasticache_subnets)}"
+#resource "aws_route_table_association" "elasticache" {
+#  count = "${length(var.elasticache_subnets)}"
 
-  subnet_id      = "${element(aws_subnet.elasticache.*.id, count.index)}"
-  route_table_id = "${element(aws_route_table.private.*.id, count.index)}"
-}
+#  subnet_id      = "${element(aws_subnet.elasticache.*.id, count.index)}"
+#  route_table_id = "${element(aws_route_table.private.*.id, count.index)}"
+#}
 
 resource "aws_route_table_association" "public" {
   count = "${length(var.public_subnets)}"

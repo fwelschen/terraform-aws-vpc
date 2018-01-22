@@ -45,14 +45,14 @@ output "public_subnets_cidr_blocks" {
   value       = ["${aws_subnet.public.*.cidr_block}"]
 }
 
-output "database_subnets" {
+output "backend_subnets" {
   description = "List of IDs of database subnets"
-  value       = ["${aws_subnet.database.*.id}"]
+  value       = ["${aws_subnet.backend.*.id}"]
 }
 
 output "database_subnets_cidr_blocks" {
   description = "List of cidr_blocks of database subnets"
-  value       = ["${aws_subnet.database.*.cidr_block}"]
+  value       = ["${aws_subnet.backend.*.cidr_block}"]
 }
 
 output "database_subnet_group" {
@@ -60,14 +60,14 @@ output "database_subnet_group" {
   value       = "${element(concat(aws_db_subnet_group.database.*.id, list("")), 0)}"
 }
 
-output "redshift_subnets" {
-  description = "List of IDs of redshift subnets"
-  value       = ["${aws_subnet.redshift.*.id}"]
-}
+#output "redshift_subnets" {
+#  description = "List of IDs of redshift subnets"
+#  value       = ["${aws_subnet.redshift.*.id}"]
+#}
 
 output "redshift_subnets_cidr_blocks" {
   description = "List of cidr_blocks of redshift subnets"
-  value       = ["${aws_subnet.redshift.*.cidr_block}"]
+  value       = ["${aws_subnet.backend.*.cidr_block}"]
 }
 
 output "redshift_subnet_group" {
@@ -75,14 +75,14 @@ output "redshift_subnet_group" {
   value       = "${element(concat(aws_redshift_subnet_group.redshift.*.id, list("")), 0)}"
 }
 
-output "elasticache_subnets" {
-  description = "List of IDs of elasticache subnets"
-  value       = ["${aws_subnet.elasticache.*.id}"]
-}
+#output "elasticache_subnets" {
+#  description = "List of IDs of elasticache subnets"
+#  value       = ["${aws_subnet.elasticache.*.id}"]
+#}
 
 output "elasticache_subnets_cidr_blocks" {
   description = "List of cidr_blocks of elasticache subnets"
-  value       = ["${aws_subnet.elasticache.*.cidr_block}"]
+  value       = ["${aws_subnet.backend.*.cidr_block}"]
 }
 
 output "elasticache_subnet_group" {

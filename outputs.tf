@@ -50,7 +50,7 @@ output "backend_subnets" {
   value       = ["${aws_subnet.backend.*.id}"]
 }
 
-output "database_subnets_cidr_blocks" {
+output "backend_subnets_cidr_blocks" {
   description = "List of cidr_blocks of database subnets"
   value       = ["${aws_subnet.backend.*.cidr_block}"]
 }
@@ -65,10 +65,10 @@ output "database_subnet_group" {
 #  value       = ["${aws_subnet.redshift.*.id}"]
 #}
 
-output "redshift_subnets_cidr_blocks" {
-  description = "List of cidr_blocks of redshift subnets"
-  value       = ["${aws_subnet.backend.*.cidr_block}"]
-}
+#output "redshift_subnets_cidr_blocks" {
+#  description = "List of cidr_blocks of redshift subnets"
+#  value       = ["${aws_subnet.backend.*.cidr_block}"]
+#}
 
 output "redshift_subnet_group" {
   description = "ID of redshift subnet group"
@@ -80,10 +80,10 @@ output "redshift_subnet_group" {
 #  value       = ["${aws_subnet.elasticache.*.id}"]
 #}
 
-output "elasticache_subnets_cidr_blocks" {
-  description = "List of cidr_blocks of elasticache subnets"
-  value       = ["${aws_subnet.backend.*.cidr_block}"]
-}
+#output "elasticache_subnets_cidr_blocks" {
+#  description = "List of cidr_blocks of elasticache subnets"
+#  value       = ["${aws_subnet.backend.*.cidr_block}"]
+#}
 
 output "elasticache_subnet_group" {
   description = "ID of elasticache subnet group"

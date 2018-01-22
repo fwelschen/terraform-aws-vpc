@@ -153,7 +153,7 @@ resource "aws_db_subnet_group" "database" {
 #}
 
 resource "aws_redshift_subnet_group" "redshift" {
-  count = "${length(var.backend_subnets) > 0 ? 1 : 0}"
+  count = "${length(var.backend_subnets) > 0 && var.create_redshift_subnet_group ? 1 : 0}"
 
   name        = "${var.name}"
   description = "Redshift subnet group for ${var.name}"
@@ -176,7 +176,7 @@ resource "aws_redshift_subnet_group" "redshift" {
 #}
 
 resource "aws_elasticache_subnet_group" "elasticache" {
-  count = "${length(var.backend_subnets) > 0 ? 1 : 0}"
+  count = "${length(var.backend_subnets) > 0 && var.create_elasticache_subnet_group ? 1 : 0}"
 
   name        = "${var.name}"
   description = "ElastiCache subnet group for ${var.name}"

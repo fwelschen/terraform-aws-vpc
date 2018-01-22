@@ -46,6 +46,16 @@ variable "create_database_subnet_group" {
   default     = true
 }
 
+variable "create_redshift_subnet_group" {
+  description = "Controls if redshift subnet group should be created"
+  default     = true
+}
+
+variable "create_elasticache_subnet_group" {
+  description = "Controls if elasticache subnet group should be created"
+  default     = true
+}
+
 variable "azs" {
   description = "A list of availability zones in the region"
   default     = []

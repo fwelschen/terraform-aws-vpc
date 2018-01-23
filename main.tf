@@ -11,7 +11,7 @@ resource "aws_vpc" "this" {
   enable_dns_hostnames = "${var.enable_dns_hostnames}"
   enable_dns_support   = "${var.enable_dns_support}"
 
-  tags = "${merge(var.tags, var.vpc_tags, map("Name", format("%s-VPC", var.name)))}"
+  tags = "${merge(var.tags, var.vpc_tags, map("Name", format("%s", var.name)))}"
 }
 
 ###################
@@ -26,7 +26,7 @@ resource "aws_vpc_dhcp_options" "this" {
   netbios_name_servers = "${var.dhcp_options_netbios_name_servers}"
   netbios_node_type    = "${var.dhcp_options_netbios_node_type}"
 
-  tags = "${merge(var.tags, var.dhcp_options_tags, map("Name", format("%s-DHCP-Options", var.name)))}"
+  tags = "${merge(var.tags, var.dhcp_options_tags, map("Name", format("%s", var.name)))}"
 }
 
 ###############################
@@ -47,7 +47,7 @@ resource "aws_internet_gateway" "this" {
 
   vpc_id = "${aws_vpc.this.id}"
 
-  tags = "${merge(var.tags, map("Name", format("%s-IG", var.name)))}"
+  tags = "${merge(var.tags, map("Name", format("%s", var.name)))}"
 }
 
 ################
@@ -59,7 +59,7 @@ resource "aws_route_table" "public" {
   vpc_id           = "${aws_vpc.this.id}"
   propagating_vgws = ["${var.public_propagating_vgws}"]
 
-  tags = "${merge(var.tags, var.public_route_table_tags, map("Name", format("%s-RT-Public", var.name)))}"
+  tags = "${merge(var.tags, var.public_route_table_tags, map("Name", format("%s", var.name)))}"
 }
 
 resource "aws_route" "public_internet_gateway" {
@@ -80,7 +80,7 @@ resource "aws_route_table" "private" {
   vpc_id           = "${aws_vpc.this.id}"
   propagating_vgws = ["${var.private_propagating_vgws}"]
 
-  tags = "${merge(var.tags, var.private_route_table_tags, map("Name", format("%s-RT-Private-%s", var.name, element(var.azs, count.index))))}"
+  tags = "${merge(var.tags, var.private_route_table_tags, map("Name", format("%s-%s", var.name, element(var.azs, count.index))))}"
 
   lifecycle {
     # When attaching VPN gateways it is common to define aws_vpn_gateway_route_propagation
@@ -210,7 +210,7 @@ resource "aws_nat_gateway" "this" {
   allocation_id = "${element(local.nat_gateway_ips, (var.single_nat_gateway ? 0 : count.index))}"
   subnet_id     = "${element(aws_subnet.public.*.id, (var.single_nat_gateway ? 0 : count.index))}"
 
-  tags = "${merge(var.tags, map("Name", format("%s-NGW-%s", var.name, element(var.azs, (var.single_nat_gateway ? 0 : count.index)))))}"
+  tags = "${merge(var.tags, map("Name", format("%s-%s", var.name, element(var.azs, (var.single_nat_gateway ? 0 : count.index)))))}"
 
   depends_on = ["aws_internet_gateway.this"]
 }
@@ -329,5 +329,5 @@ resource "aws_vpn_gateway" "this" {
 
   vpc_id = "${aws_vpc.this.id}"
 
-  tags = "${merge(var.tags, map("Name", format("%s-VPN-GW", var.name)))}"
+  tags = "${merge(var.tags, map("Name", format("%s", var.name)))}"
 }

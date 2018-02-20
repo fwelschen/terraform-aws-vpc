@@ -164,7 +164,6 @@ resource "aws_elasticache_subnet_group" "elasticache" {
   name        = "${lower(var.name)}-elasticache-subnet-group"
   description = "ElastiCache subnet group for ${var.name}"
   subnet_ids  = ["${aws_subnet.backend.*.id}"]
-
 }
 
 ##############

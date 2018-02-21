@@ -23,26 +23,36 @@ variable "private_subnets" {
   default     = []
 }
 
-variable "database_subnets" {
+variable "backend_subnets" {
   type        = "list"
-  description = "A list of database subnets"
+  description = "A list of backend subnets"
   default     = []
 }
 
-variable "redshift_subnets" {
-  type        = "list"
-  description = "A list of redshift subnets"
-  default     = []
-}
+#variable "redshift_subnets" {
+#  type        = "list"
+#  description = "A list of redshift subnets"
+#  default     = []
+#}
 
-variable "elasticache_subnets" {
-  type        = "list"
-  description = "A list of elasticache subnets"
-  default     = []
-}
+#variable "elasticache_subnets" {
+#  type        = "list"
+#  description = "A list of elasticache subnets"
+#  default     = []
+#}
 
 variable "create_database_subnet_group" {
   description = "Controls if database subnet group should be created"
+  default     = true
+}
+
+variable "create_redshift_subnet_group" {
+  description = "Controls if redshift subnet group should be created"
+  default     = true
+}
+
+variable "create_elasticache_subnet_group" {
+  description = "Controls if elasticache subnet group should be created"
   default     = true
 }
 
@@ -142,20 +152,20 @@ variable "private_route_table_tags" {
   default     = {}
 }
 
-variable "database_subnet_tags" {
-  description = "Additional tags for the database subnets"
+variable "backend_subnet_tags" {
+  description = "Additional tags for the backend subnets"
   default     = {}
 }
 
-variable "redshift_subnet_tags" {
-  description = "Additional tags for the redshift subnets"
-  default     = {}
-}
+#variable "redshift_subnet_tags" {
+#  description = "Additional tags for the redshift subnets"
+#  default     = {}
+#}
 
-variable "elasticache_subnet_tags" {
-  description = "Additional tags for the elasticache subnets"
-  default     = {}
-}
+#variable "elasticache_subnet_tags" {
+#  description = "Additional tags for the elasticache subnets"
+#  default     = {}
+#}
 
 variable "dhcp_options_tags" {
   description = "Additional tags for the DHCP option set"

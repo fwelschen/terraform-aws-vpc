@@ -148,3 +148,13 @@ output "vpc_endpoint_dynamodb_pl_id" {
   description = "The prefix list for the DynamoDB VPC endpoint."
   value       = "${element(concat(aws_vpc_endpoint.dynamodb.*.prefix_list_id, list("")), 0)}"
 }
+
+output "vpc_peering" {
+  description = "The VPC IDs that will be peering with your VPC"
+  value       = "${var.vpc_peering}"
+}
+
+output "enable_remote_dns_resolution" {
+  description = "True if you have dns resolution between your VPCs"
+  value       = "${var.enable_remote_dns_resolution}"
+}

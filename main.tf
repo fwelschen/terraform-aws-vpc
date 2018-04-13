@@ -319,6 +319,6 @@ resource "aws_vpc_peering_connection" "this" {
     allow_remote_vpc_dns_resolution = "${var.enable_remote_dns_resolution}"
   }
 
-  tags = "${merge(var.tags, var.vpc_tags, map("Name", format("%s-to-%s", var.name, element(var.vpc_peering_names, count.index))))}"
+  tags = "${merge(var.tags, var.vpc_tags, map("Name", format("%s-to-%s", var.name, element(var.vpc_peering_name, count.index))))}"
 
 }

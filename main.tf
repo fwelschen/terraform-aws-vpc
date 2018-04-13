@@ -300,3 +300,25 @@ resource "aws_vpn_gateway" "this" {
 
   tags = "${merge(var.tags, map("Name", format("%s", var.name)))}"
 }
+
+######################################
+# Peering Connections to another VPCs
+######################################
+resource "aws_vpc_peering_connection" "this" {
+  count = "${length(var.vpc_peering)}"
+
+  vpc_id        = "${aws_vpc.this.id}"
+  peer_vpc_id   = "${element(var.vpc_peering, count.index)}"
+  auto_accept   = "${var.enable_vpc_auto_accept}"
+
+  accepter {
+    allow_remote_vpc_dns_resolution = "${var.enable_remote_dns_resolution}"
+  }
+
+  requester {
+    allow_remote_vpc_dns_resolution = "${var.enable_remote_dns_resolution}"
+  }
+
+  tags = "${merge(var.tags, var.vpc_tags, map("Name", format("%s-to-%s", var.name, element(var.vpc_peering_names, count.index))))}"
+
+}

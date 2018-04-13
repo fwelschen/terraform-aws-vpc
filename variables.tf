@@ -204,3 +204,25 @@ variable "dhcp_options_netbios_node_type" {
   description = "Specify netbios node_type for DHCP options set"
   default     = ""
 }
+
+variable "vpc_peering" {
+  description = "Specify a list of VPCs that will be peering with this"
+  type        = "list"
+  default     = []
+}
+
+variable "vpc_peering_name" {
+  description = "Specify a list of VPC names that will be peering, this have to be in the same order as the list of VPC IDs"
+  type        = "list"
+  default     = []
+}
+
+variable "enable_vpc_auto_accept" {
+  description = "Should be true if you want to accept automatically the peering connection between all your VPCs that you defined in the list"
+  default     = false
+}
+
+variable "enable_remote_dns_resolution" {
+  description = "Should be true if you want to enable private DNS resolution between your VPCs"
+  default     = false
+}

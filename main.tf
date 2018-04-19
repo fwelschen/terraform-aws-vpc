@@ -14,6 +14,13 @@ resource "aws_vpc" "this" {
   tags = "${merge(var.tags, var.vpc_tags, map("Name", format("%s", var.name)))}"
 }
 
+####
+# Cleaning default security group
+###
+resource "aws_default_security_group" "default" {
+  vpc_id = "${aws_vpc.this.id}"
+}
+
 ###################
 # DHCP Options Set
 ###################

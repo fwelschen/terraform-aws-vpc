@@ -14,10 +14,11 @@ resource "aws_vpc" "this" {
   tags = "${merge(var.tags, var.vpc_tags, map("Name", format("%s", var.name)))}"
 }
 
-####
+##################################
 # Cleaning default security group
-###
+##################################
 resource "aws_default_security_group" "default" {
+  count  = "${var.enable_cleaning_default_sg ? 1 : 0}"
   vpc_id = "${aws_vpc.this.id}"
 }
 

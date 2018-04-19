@@ -226,3 +226,8 @@ variable "enable_remote_dns_resolution" {
   description = "Should be true if you want to enable private DNS resolution between your VPCs"
   default     = false
 }
+
+variable "enable_cleaning_default_sg" {
+  description = "Should be true if you want to clean the default security group of your VPC"
+  default     = false
+}

@@ -205,13 +205,13 @@ variable "dhcp_options_netbios_node_type" {
   default     = ""
 }
 
-variable "vpc_peering" {
+variable "vpc_peering_with" {
   description = "Specify a list of VPCs that will be peering with this"
   type        = "list"
   default     = []
 }
 
-variable "vpc_peering_name" {
+variable "vpc_peering_with_name" {
   description = "Specify a list of VPC names that will be peering, this have to be in the same order as the list of VPC IDs"
   type        = "list"
   default     = []

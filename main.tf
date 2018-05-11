@@ -14,6 +14,14 @@ resource "aws_vpc" "this" {
   tags = "${merge(var.tags, var.vpc_tags, map("Name", format("%s", var.name)))}"
 }
 
+##################################
+# Cleaning default security group
+##################################
+resource "aws_default_security_group" "default" {
+  count  = "${var.enable_cleaning_default_sg ? 1 : 0}"
+  vpc_id = "${aws_vpc.this.id}"
+}
+
 ###################
 # DHCP Options Set
 ###################
@@ -299,4 +307,25 @@ resource "aws_vpn_gateway" "this" {
   vpc_id = "${aws_vpc.this.id}"
 
   tags = "${merge(var.tags, map("Name", format("%s", var.name)))}"
+}
+
+######################################
+# Peering Connections to another VPCs
+######################################
+resource "aws_vpc_peering_connection" "this" {
+  count = "${length(var.vpc_peering_with)}"
+
+  vpc_id      = "${aws_vpc.this.id}"
+  peer_vpc_id = "${element(var.vpc_peering_with, count.index)}"
+  auto_accept = "${var.enable_vpc_auto_accept}"
+
+  accepter {
+    allow_remote_vpc_dns_resolution = "${var.enable_remote_dns_resolution}"
+  }
+
+  requester {
+    allow_remote_vpc_dns_resolution = "${var.enable_remote_dns_resolution}"
+  }
+
+  tags = "${merge(var.tags, var.vpc_tags, map("Name", format("%s-to-%s", var.name, element(var.vpc_peering_with_name, count.index))))}"
 }

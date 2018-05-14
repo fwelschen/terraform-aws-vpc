@@ -329,3 +329,14 @@ resource "aws_vpc_peering_connection" "this" {
 
   tags = "${merge(var.tags, var.vpc_tags, map("Name", format("%s-to-%s", var.name, element(var.vpc_peering_with_name, count.index))))}"
 }
+
+################################
+# Bucket S3 ## We use it for k8s
+################################
+resource "aws_s3_bucket" "this" {
+  acl    = "private"
+  tags = "${merge(var.tags, map("Name", format("vpc-%s.trocafone.net", var.name)))}"
+  versioning {
+    enabled = true
+  }
+}

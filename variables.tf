@@ -231,3 +231,8 @@ variable "enable_cleaning_default_sg" {
   description = "Should be true if you want to clean the default security group of your VPC"
   default     = false
 }
+
+variable "enable_s3_bucket" {
+  description = "Should be true if you want to create a bucket with your VPC"
+  default     = false
+}

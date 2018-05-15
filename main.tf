@@ -335,7 +335,7 @@ resource "aws_vpc_peering_connection" "this" {
 ################################
 resource "aws_s3_bucket" "this" {
   acl    = "private"
-  tags = "${merge(var.tags, map("Name", format("vpc-%s.trocafone.net", var.name)))}"
+  tags = "${merge(var.tags, map("Name", format("vpc-%s.trocafone.net", lower(var.name))))}"
   versioning {
     enabled = true
   }

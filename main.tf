@@ -335,7 +335,7 @@ resource "aws_vpc_peering_connection" "this" {
 ################################
 resource "aws_s3_bucket" "this" {
   count = "${var.enable_s3_bucket ? 1 : 0}"
-  bucket = "${format("%s-vpc.trocafone.net", lower(var.tags.[Name]))}"
+  bucket = "${format("%s-vpc.trocafone.net", lower(var.name))}"
   acl    = "private"
   tags = "${merge(var.tags, map("Name", format("%s-vpc.trocafone.net", lower(var.name))))}"
   versioning {

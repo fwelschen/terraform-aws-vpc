@@ -330,14 +330,14 @@ resource "aws_vpc_peering_connection" "this" {
   tags = "${merge(var.tags, var.vpc_tags, map("Name", format("%s-to-%s", var.name, element(var.vpc_peering_with_name, count.index))))}"
 }
 
-################################
-# Bucket S3 ## We use it for k8s
-################################
+################################################################
+# Bucket S3 # You can use it to save metadata related to the VPC
+################################################################
 resource "aws_s3_bucket" "this" {
   count  = "${var.enable_s3_bucket ? 1 : 0}"
-  bucket = "${format("%s-vpc.trocafone.net", lower(var.name))}"
+  bucket = "${var.bucket_name}"
   acl    = "private"
-  tags   = "${merge(var.tags, map("Name", format("%s-vpc.trocafone.net", lower(var.name))))}"
+  tags   = "${merge(var.tags, map("Name", ${var.bucket_name}))}"
 
   versioning {
     enabled = true

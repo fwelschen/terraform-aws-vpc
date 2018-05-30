@@ -239,5 +239,5 @@ variable "enable_s3_bucket" {
 
 variable "bucket_name" {
   description = "Name of bucket that will be created with the VPC"
-  default = ""
+  default     = ""
 }

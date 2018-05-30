@@ -233,7 +233,7 @@ variable "enable_cleaning_default_sg" {
 }
 
 variable "enable_s3_bucket" {
-  description = "Should be true if you want to create a bucket for save metadata related to the VPC"
+  description = "Should be true if you want to create a bucket to save metadata related to the VPC"
   default     = false
 }
 

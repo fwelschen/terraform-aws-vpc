@@ -337,7 +337,7 @@ resource "aws_s3_bucket" "this" {
   count  = "${var.enable_s3_bucket ? 1 : 0}"
   bucket = "${var.bucket_name}"
   acl    = "private"
-  tags   = "${merge(var.tags, map("Name", ${var.bucket_name}))}"
+  tags   = "${merge(var.tags, map("Name", var.bucket_name))}"
 
   versioning {
     enabled = true

@@ -158,3 +158,8 @@ output "enable_remote_dns_resolution" {
   description = "True if you have dns resolution between your VPCs"
   value       = "${var.enable_remote_dns_resolution}"
 }
+
+output "bucket_name" {
+  description = "Name of your bucket that was created with your VPC"
+  value       = "${aws_s3_bucket.this.*.bucket}"
+}

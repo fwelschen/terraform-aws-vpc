@@ -117,6 +117,11 @@ variable "enable_customer_gateway" {
   default     = false
 }
 
+variable "enable_vpn_connection" {
+  description = "Should be true if you want to create a new VPN connection against a customer gateway"
+  default     = false
+}
+
 variable "private_propagating_vgws" {
   description = "A list of VGWs the private route table should propagate"
   default     = []

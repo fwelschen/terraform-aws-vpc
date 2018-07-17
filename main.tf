@@ -358,6 +358,7 @@ resource "aws_customer_gateway" "this" {
 # VPN connection
 ################
 resource "aws_vpn_connection" "this" {
+  count               = "${var.enable_vpn_connection ? 1 : 0}"
   vpn_gateway_id      = "${aws_vpn_gateway.this.id}"
   customer_gateway_id = "${aws_customer_gateway.this.id}"
   type                = "ipsec.1"

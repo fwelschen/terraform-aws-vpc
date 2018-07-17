@@ -343,3 +343,22 @@ resource "aws_s3_bucket" "this" {
     enabled = true
   }
 }
+
+################################################
+# Customer gateway for creating a VPN connection
+################################################
+resource "aws_customer_gateway" "this" {
+  count      = "${var.enable_customer_gateway ? 1 : 0}"
+  bgp_asn    = "${var.bgp_asn}"
+  ip_address = "${var.site_public_ip}"
+  type       = "ipsec.1"
+}
+
+################
+# VPN connection
+################
+resource "aws_vpn_connection" "this" {
+  vpn_gateway_id      = "${aws_vpn_gateway.this.id}"
+  customer_gateway_id = "${aws_customer_gateway.this.id}"
+  type                = "ipsec.1"
+}

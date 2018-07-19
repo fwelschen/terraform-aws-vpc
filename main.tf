@@ -367,7 +367,7 @@ resource "aws_vpn_connection" "this" {
 ###############################
 # VPN private route propagation
 ###############################
-resource "aws_vpn_gateway_route_propagation" "this" {
+resource "aws_vpn_gateway_route_propagation" "private" {
   count          = "${var.enable_vpn_route_private_propagation ? 1 : 0}"
   vpn_gateway_id = "${aws_vpn_gateway.this.id}"
   route_table_id = "${aws_route_table.private.id}"
@@ -376,7 +376,7 @@ resource "aws_vpn_gateway_route_propagation" "this" {
 ##############################
 # VPN public route propagation
 ##############################
-resource "aws_vpn_gateway_route_propagation" "this" {
+resource "aws_vpn_gateway_route_propagation" "public" {
   count          = "${var.enable_vpn_route_public_propagation ? 1 : 0}"
   vpn_gateway_id = "${aws_vpn_gateway.this.id}"
   route_table_id = "${aws_route_table.public.id}"

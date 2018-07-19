@@ -368,7 +368,7 @@ resource "aws_vpn_connection" "this" {
 # VPN private route propagation
 ###############################
 resource "aws_vpn_gateway_route_propagation" "private" {
-  count          = "${var.enable_vpn_route_private_propagation ? length(var.private_subnets) : 0}"
+  count          = "${var.enable_vpn_route_private_propagation ? max(length(var.private_subnets), length(var.backend_subnets)) : 0}"
   vpn_gateway_id = "${aws_vpn_gateway.this.id}"
   route_table_id = "${element(aws_route_table.private.*.id, count.index)}"
 }

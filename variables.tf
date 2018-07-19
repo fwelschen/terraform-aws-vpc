@@ -261,3 +261,13 @@ variable "bgp_asn" {
   description = "BGP autonomous system number"
   default     = "65000"
 }
+
+variable "enable_vpn_route_private_propagation" {
+  description = "Should be true if you need to propagate your private route tables to your VPN connection"
+  default     = false
+}
+
+variable "enable_vpn_route_public_propagation" {
+  description = "Should be true if you need to propagate your public route tables to your VPN connection"
+  default     = false
+}

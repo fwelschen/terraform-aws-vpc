@@ -271,8 +271,3 @@ variable "enable_vpn_route_public_propagation" {
   description = "Should be true if you need to propagate your public route tables to your VPN connection"
   default     = false
 }
-
-variable "enable_vpn_route_backend_propagation" {
-  description = "Should be true if you need to propagate your backend route tables to your VPN connection"
-  default     = false
-}

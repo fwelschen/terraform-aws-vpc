@@ -381,3 +381,12 @@ resource "aws_vpn_gateway_route_propagation" "public" {
   vpn_gateway_id = "${aws_vpn_gateway.this.id}"
   route_table_id = "${aws_route_table.public.id}"
 }
+
+###############################
+# VPN backend route propagation
+###############################
+resource "aws_vpn_gateway_route_propagation" "backend" {
+  count          = "${var.enable_vpn_route_backend_propagation ? length(var.backend_subnets) : 0}"
+  vpn_gateway_id = "${aws_vpn_gateway.this.id}"
+  route_table_id = "${aws_route_table.backend.id}"
+}

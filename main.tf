@@ -360,7 +360,7 @@ resource "aws_customer_gateway" "this" {
 resource "aws_vpn_connection" "this" {
   count               = "${var.enable_vpn_connection ? 1 : 0}"
   vpn_gateway_id      = "${aws_vpn_gateway.this.id}"
-  customer_gateway_id = "${aws_customer_gateway.this.id}"
+  customer_gateway_id = "${var.enable_customer_gateway ? ${aws_customer_gateway.this.id} : ${var.custom_customer_gateway}}"
   type                = "ipsec.1"
 }
 

@@ -117,6 +117,11 @@ variable "enable_customer_gateway" {
   default     = false
 }
 
+variable "custom_customer_gateway" {
+  description = "Should be a valid customer gateway ID"
+  default     = ""
+}
+
 variable "enable_vpn_connection" {
   description = "Should be true if you want to create a new VPN connection against a customer gateway"
   default     = false

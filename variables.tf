@@ -107,21 +107,6 @@ variable "map_public_ip_on_launch" {
   default     = true
 }
 
-variable "enable_vpn_gateway" {
-  description = "Should be true if you want to create a new VPN Gateway resource and attach it to the VPC"
-  default     = false
-}
-
-variable "customer_gateway" {
-  description = "Should be a valid customer gateway ID"
-  default     = ""
-}
-
-variable "enable_vpn_connection" {
-  description = "Should be true if you want to create a new VPN connection against a customer gateway"
-  default     = false
-}
-
 variable "private_propagating_vgws" {
   description = "A list of VGWs the private route table should propagate"
   default     = []
@@ -250,14 +235,4 @@ variable "enable_s3_bucket" {
 variable "bucket_name" {
   description = "Name of bucket that will be created with the VPC"
   default     = ""
-}
-
-variable "enable_vpn_route_private_propagation" {
-  description = "Should be true if you need to propagate your private route tables to your VPN connection"
-  default     = false
-}
-
-variable "enable_vpn_route_public_propagation" {
-  description = "Should be true if you need to propagate your public route tables to your VPN connection"
-  default     = false
 }

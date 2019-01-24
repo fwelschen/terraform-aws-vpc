@@ -298,17 +298,6 @@ resource "aws_route_table_association" "public" {
   route_table_id = "${aws_route_table.public.id}"
 }
 
-##############
-# VPN Gateway
-##############
-resource "aws_vpn_gateway" "this" {
-  count = "${var.enable_vpn_gateway ? 1 : 0}"
-
-  vpc_id = "${aws_vpc.this.id}"
-
-  tags = "${merge(var.tags, map("Name", format("%s", var.name)))}"
-}
-
 ######################################
 # Peering Connections to another VPCs
 ######################################
@@ -342,32 +331,4 @@ resource "aws_s3_bucket" "this" {
   versioning {
     enabled = true
   }
-}
-
-################
-# VPN connection
-################
-resource "aws_vpn_connection" "this" {
-  count               = "${var.enable_vpn_connection ? 1 : 0}"
-  vpn_gateway_id      = "${aws_vpn_gateway.this.id}"
-  customer_gateway_id = "${var.customer_gateway}"
-  type                = "ipsec.1"
-}
-
-###############################
-# VPN private route propagation
-###############################
-resource "aws_vpn_gateway_route_propagation" "private" {
-  count          = "${var.enable_vpn_route_private_propagation ? max(length(var.private_subnets), length(var.backend_subnets)) : 0}"
-  vpn_gateway_id = "${aws_vpn_gateway.this.id}"
-  route_table_id = "${element(aws_route_table.private.*.id, count.index)}"
-}
-
-##############################
-# VPN public route propagation
-##############################
-resource "aws_vpn_gateway_route_propagation" "public" {
-  count          = "${var.enable_vpn_route_public_propagation ? length(var.public_subnets) : 0}"
-  vpn_gateway_id = "${aws_vpn_gateway.this.id}"
-  route_table_id = "${aws_route_table.public.id}"
 }
